@@ -11,14 +11,7 @@ public:
 int sum=nums[0];
              while( right<nums.size())
              {
-               if(nums[right]>=sum)
-               {
-                sum=nums[right];
-               }
-               else
-               {
-                sum+=nums[right];
-               }
+               sum=max(nums[right],sum+nums[right]);
    maxsum=max(maxsum,sum);
    right++;
              }
