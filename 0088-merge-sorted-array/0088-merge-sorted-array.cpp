@@ -1,52 +1,34 @@
 class Solution {
 public:
-    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
-        vector<int>temp;
-if(m==0)
-{
-    for(int i=0;i<n;i++)
-    {
-        nums1[i]=nums2[i];
-    }
-}
-if(n==0)
-{
-    return;
-}
+    int partitionArray(vector<int>& arr, int low, int high) {
+        int pivot = arr[high];
+        int i = low - 1;
 
-        int left=0;
-        int right=0;
-        while(left<=m-1 && right<=n-1)
-        {
-            if(nums1[left]<=nums2[right])
-            {
-                temp.push_back(nums1[left]);
-                left++;
-            }
-            else
-            {
-                temp.push_back(nums2[right]);
-                right++;
+        for(int j = low; j < high; j++) {
+            if(arr[j] < pivot) {
+                i++;
+                swap(arr[i], arr[j]);
             }
         }
 
-while(left<=m-1)
-{
-    temp.push_back(nums1[left]);
-                left++; 
-}
-while(right<=n-1)
-{
-temp.push_back(nums2[right]);
-                right++;
+        swap(arr[i + 1], arr[high]);
+        return i + 1;
+    }
 
-}
+    void quickSort(vector<int>& arr, int low, int high) {
+        if (low >= high) return;     // SAFE EXIT
 
+        int pi = partitionArray(arr, low, high);
 
-for(int i=0;i<temp.size();i++)
-{
-    nums1[i]=temp[i];
-}
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
 
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        for(int i = 0; i < n; i++) {
+            nums1[m + i] = nums2[i];
+        }
+
+        quickSort(nums1, 0, m + n - 1);
     }
 };
