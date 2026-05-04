@@ -1,21 +1,31 @@
+#include<cctype>
 class Solution {
 public:
-    bool isPalindrome(string s) {
-        string result="";
-        for(int i=0;i<s.length();i++)
+    bool isPalindrome(string str){
+      
+transform(str.begin(), str.end(), str.begin(), ::tolower); // to lower
+   
+        vector<char>result;
+        for(auto ch:str)
         {
-            if(isalnum(s[i]))   // check whether it alphabet and numerical or not
-            {
-result.push_back(s[i]);
-            }
+if(isalnum(ch))
+{
+
+result.push_back(ch);
+}
         }
-        transform(result.begin(),result.end(),result.begin(),::tolower);
-        string revresult=result;
-     reverse(revresult.begin(),revresult.end());
-        if(revresult==result)
-        {
-            return true;
+int left=0;
+int right=result.size()-1;
+
+while(left<=right)
+{
+    if(result[left]!=result[right])
+    {
+        return false;
     }
-    return false;
+    left++;
+    right--;
+}
+    return true;
     }
 };
