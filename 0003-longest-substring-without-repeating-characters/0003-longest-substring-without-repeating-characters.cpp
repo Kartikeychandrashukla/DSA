@@ -1,27 +1,22 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        string longs="";
-        string str;
-        for(int i=0;i<s.length();i++)
+         vector<int> up(256,0);
+        int max_length=0;
+int left=0;
+int right=0;
+      while(right<s.length())
+      {
+        up[s[right]]++;
+        while(up[s[right]]>1)
         {
-         str="";
-            for(int j=i;j<s.length();j++)
-            {
-                if(str.find(s[j])==std::string::npos)
-                {
-                    str.push_back(s[j]);
-                    if(str.length()>longs.length())
-                    {
-                        longs=str;
-                    }
-                }
-                else
-                {
-                    break;
-                }
-            }
+            up[s[left]]--;
+            left++;
         }
-        return (longs.length());
+        max_length=max(max_length,right-left+1);
+        right++;
+      }
+
+      return max_length;
     }
 };
